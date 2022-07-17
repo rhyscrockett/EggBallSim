@@ -27,6 +27,14 @@ class Pool:
     def add(self, player):
         self.pool.append(player)
 
+class ManagerMode:
+    def __init__(self, pool):
+        self.pool = pool
+
+    def print_players(self):
+        for i in self.pool:
+            print(i)
+
 def get_position():
     """Returns a random position from a list of possible player positions."""
     pos = ["QB", "RB", "WR", "TE", "LT", "LG", "C", "RG", "RT",
@@ -53,6 +61,6 @@ def generate_players():
 
 if __name__ == '__main__':
     draft = generate_players() # returns pool method
-
-    for i in draft.pool:
-        print(i)
+    
+    manager = ManagerMode(draft.pool)
+    manager.print_players()

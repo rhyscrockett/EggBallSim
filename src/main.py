@@ -34,6 +34,10 @@ def get_name():
     """Returns a random name from the names library."""
     return names.get_full_name(gender='male')
 
+def get_price():
+    """Returns a random float value rounded to the closest."""
+    return round(random.uniform(660000, 50000000)
+
 def generate_players():
     """Return a Player method that contains a pool of random generated players."""
     player_pool = Pool()
@@ -42,10 +46,6 @@ def generate_players():
         player_pool.add(i)
 
     return player_pool
-
-def get_price():
-    """Returns a random float value rounded to the closest."""
-    return round(random.uniform(660000, 50000000)
 
 if __name__ == '__main__':
     p = Player("Rhys Crockett", "QB", "12345")

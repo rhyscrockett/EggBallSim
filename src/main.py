@@ -32,8 +32,15 @@ class ManagerMode:
         self.pool = pool
 
     def print_players(self):
+        """Print all players from your teams pool."""
         for i in self.pool:
             print(i)
+
+    def print_position(self, pos):
+        """Takes one argument: pos. Search for players matching the position."""
+        for i in self.pool:
+            if i.position == pos:
+                print(i.name, i.position)
 
 def get_position():
     """Returns a random position from a list of possible player positions."""
@@ -62,5 +69,6 @@ def generate_players():
 if __name__ == '__main__':
     draft = generate_players() # returns pool method
     
-    manager = ManagerMode(draft.pool)
+    manager = ManagerMode(draft.pool) # need to pass the actual pool list using the methods variable
     manager.print_players()
+    manager.print_position('QB')

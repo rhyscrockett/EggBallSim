@@ -16,6 +16,13 @@ class Player:
         self.position = position
         self.price = price
 
+class Pool:
+    def __init__(self):
+        self.pool = []
+
+    def add(self, player):
+        self.pool.append(player)
+
 def get_position():
     """Returns a random position from a list of possible player positions."""
     pos = ["QB", "RB", "WR", "TE", "LT", "LG", "C", "RG", "RT",

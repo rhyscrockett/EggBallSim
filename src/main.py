@@ -25,6 +25,9 @@ def get_position():
 def get_name():
     return names.get_full_name(gender='male')
 
+def get_price():
+    return round(random.uniform(660000, 50000000)
+
 if __name__ == '__main__':
     p = Player("Rhys Crockett", "QB", "12345")
 

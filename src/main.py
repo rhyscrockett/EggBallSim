@@ -17,15 +17,18 @@ class Player:
         self.price = price
 
 def get_position():
+    """Returns a random position from a list of possible player positions."""
     pos = ["QB", "RB", "WR", "TE", "LT", "LG", "C", "RG", "RT",
             "DT", "DE", "MLB", "OLB", "CB", "SS", "FS",
             "K", "P"]
     return random.choice(pos)
 
 def get_name():
+    """Returns a random name from the names library."""
     return names.get_full_name(gender='male')
 
 def get_price():
+    """Returns a random float value rounded to the closest."""
     return round(random.uniform(660000, 50000000)
 
 if __name__ == '__main__':

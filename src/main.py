@@ -9,6 +9,7 @@
 
 import random # needed for random player position
 import names # needed for name generation (i may do this from scratch if needed)
+import operator # needed to pass operators for print_price ManagerMode function
 
 class Player:
     def __init__(self, name, position, price):
@@ -42,7 +43,7 @@ class ManagerMode:
             if i.position == pos:
                 print(i.name, i.position)
 
-    def print_price(self, operator, evaluate):
+    def print_price(self, operator, evaluation):
         """Takes two arguments: operator, evaluate. Search for players matching the price evaulation by passing a desired operator."""
         for i in self.pool:
             if get_operator(i.price, operator, evaluation):
@@ -88,4 +89,4 @@ if __name__ == '__main__':
     manager = ManagerMode(draft.pool) # need to pass the actual pool list using the methods variable
     manager.print_players()
     manager.print_position('QB')
-    manager.print_price('<', 700000)
+    manager.print_price('<', 9000000)

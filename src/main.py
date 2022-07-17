@@ -8,6 +8,7 @@
 # TODO: Random players, all of the features you can usually do in a simulator
 
 import random # needed for random player position
+import names # needed for name generation (i may do this from scratch if needed)
 
 class Player:
     def __init__(self, name, position, price):
@@ -20,6 +21,9 @@ def get_position():
             "DT", "DE", "MLB", "OLB", "CB", "SS", "FS",
             "K", "P"]
     return random.choice(pos)
+
+def get_name():
+    return names.get_full_name(gender='male')
 
 if __name__ == '__main__':
     p = Player("Rhys Crockett", "QB", "12345")

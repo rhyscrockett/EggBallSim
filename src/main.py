@@ -42,6 +42,22 @@ class ManagerMode:
             if i.position == pos:
                 print(i.name, i.position)
 
+    def print_price(self, operator, evaluate):
+        """Takes two arguments: operator, evaluate. Search for players matching the price evaulation by passing a desired operator."""
+        for i in self.pool:
+            if get_operator(i.price, operator, evaluation):
+                price = "${:,}".format(i.price) # format i.price (repeated from the __repr__ override)
+                print(i.name, price)
+                
+def get_operator(inp, relate, cut):
+    """Returns true or false using the operator library for input and cut."""
+    ops = {'>': operator.gt,
+           '<': operator.lt,
+           '>=': operator.ge,
+           '<=': operator.le,
+           '==': operator.eq}
+    return ops[relate](inp, cut)
+                
 def get_position():
     """Returns a random position from a list of possible player positions."""
     pos = ["QB", "RB", "WR", "TE", "LT", "LG", "C", "RG", "RT",
@@ -72,3 +88,4 @@ if __name__ == '__main__':
     manager = ManagerMode(draft.pool) # need to pass the actual pool list using the methods variable
     manager.print_players()
     manager.print_position('QB')
+    manager.print_price('<', 700000)

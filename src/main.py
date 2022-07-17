@@ -6,3 +6,14 @@
 # TODO: One of the main personal requirements of this game will be to force me to use OOP paradigms
 # TODO: Get fast, responsive TUI
 # TODO: Random players, all of the features you can usually do in a simulator
+
+class Player:
+    def __init__(self, name, position, price):
+        self.name = name
+        self.position = position
+        self.price = price
+
+if __name__ == '__main__':
+    p = Player("Rhys Crockett", "QB", "12345")
+
+    print(p.name, p.position, p.price)

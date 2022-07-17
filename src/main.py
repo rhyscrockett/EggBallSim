@@ -16,6 +16,10 @@ class Player:
         self.position = position
         self.price = price
 
+    def __repr__(self):
+        price = "${:,}".format(self.price)
+        return f"{self.name}: ({self.position}) - {price}"
+
 class Pool:
     def __init__(self):
         self.pool = []
@@ -36,7 +40,7 @@ def get_name():
 
 def get_price():
     """Returns a random float value rounded to the closest."""
-    return round(random.uniform(660000, 50000000)
+    return round(random.uniform(660000, 50000000))
 
 def generate_players():
     """Return a Player method that contains a pool of random generated players."""
@@ -48,6 +52,7 @@ def generate_players():
     return player_pool
 
 if __name__ == '__main__':
-    p = Player("Rhys Crockett", "QB", "12345")
+    draft = generate_players() # returns pool method
 
-    print(p.name, p.position, p.price)
+    for i in draft.pool:
+        print(i)

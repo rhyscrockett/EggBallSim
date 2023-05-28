@@ -1,0 +1,243 @@
+{
+    "Acrisure Stadium": [
+	{
+	    "Team": "Pittsburgh Steelers",
+	    "Capacity": 68400,
+	    "Location": "Pittsburgh, Pennsylvania",
+	}
+    ]
+
+    "Allegiant Stadium": [
+	{
+	    "Team": "Las Vegas Raiders",
+	    "Capacity": 65000,
+	    "Location": "Paradise, Nevada",
+	}
+	
+    ]
+
+    "Arrowhead Stadium": [
+	{
+	    "Team": "Kansas City Chiefs",
+	    "Capacity": 76416,
+	    "Location": "Kansas City, Missouri",
+	}
+    ]
+
+    "AT&T Stadium": [
+	{
+	    "Team": "Dallas Cowboys",
+	    "Capacity": 80000,
+	    "Location": "Arlington, Texas",
+	}
+    ]
+
+    "Bank of America Stadium": [
+	{
+	    "Team": "Carolina Panthers",
+	    "Capacity": 75523,
+	    "Location": "Charlotte, North Carolina",
+	}
+    ]
+
+    "Caesars Stadium": [
+	{
+	    "Team": "New Orleans Saints",
+	    "Capacity": 73208,
+	    "Location": "New Orleans, Louisiana",
+	}
+    ]
+
+    "Cleveland Browns Stadium": [
+	{
+	    "Team": "Cleveland Browns",
+	    "Capacity": 67895,
+	    "Location": "Cleveland, Ohio",
+	}
+    ]
+
+    "Empower Field at Mile High": [
+	{
+	    "Team": "Denver Broncos",
+	    "Capacity": 76125,
+	    "Location": "Denver, Colorado",
+	}
+    ]
+
+    "FedExField": [
+	{
+	    "Team": "Washington Commanders",
+	    "Capacity": 62000,
+	    "Locaion": "Landover, Maryland",
+	}
+    ]
+
+    "Ford Field": [
+	{
+	    "Team": "Detroit Lions",
+	    "Capacity": 65000,
+	    "Location": "Detroit, Michigan",
+	}
+    ]
+
+    "Gillette Stadium": [
+	{
+	    "Team": "New England Patriots",
+	    "Capacity": 66829,
+	    "Location": "Foxborough, Massachusetts",
+	}
+    ]
+
+    "Hard Rock Stadium": [
+	{
+	    "Team": "Miami Dolphins",
+	    "Capacity": 65326,
+	    "Location": "Miami Gardens, Florida",
+	}
+    ]
+
+    "Highmark Stadium": [
+	{
+	    "Team": "Buffalo Bills",
+	    "Capacity": 71608,
+	    "Location": "Orchard Park, New York",
+	}
+    ]
+
+    "Lambeau Field": [
+	{
+	    "Team": "Green Bay Packers",
+	    "Capacity": 81441,
+	    "Location": "Green Bay, Wisconsin",
+	}
+    ]
+
+    "Levi's Stadium": [
+	{
+	    "Team": "San Francisco 49ers",
+	    "Capacity": 68500,
+	    "Location": "Santa Clara, California",
+	}
+    ]
+
+    "Lincoln Financial Field": [
+	{
+	    "Team": "Philadelphia Eagles",
+	    "Capactiy": 69596,
+	    "Location": "Philadelphia, Pennsylvania",
+	}
+    ]
+
+    "Lucas Oil Stadium": [
+	{
+	    "Team": "Indianapolis Colts",
+	    "Capacity": 63000
+	    "Location": "Indianapolis, Indiana",
+	}
+    ]
+
+    "Lumen Field": [
+	{
+	    "Team": "Seattle Seahawks",
+	    "Capacity": 69000
+	    "Location": "Seattle, Washington",
+	}
+    ]
+
+    "M&T Bank Stadium": [
+	{
+	    "Team": "Baltimore Ravens",
+	    "Capacity": 71008,
+	    "Location": "Baltimore, Maryland",
+	}
+    ]
+
+    "Mercedes-Benz Stadium": [
+	{
+	    "Team": "Atlanta Falcons",
+	    "Capacity": 71000,
+	    "Location": "Atlanta, Georgia",
+	}
+    ]
+
+    "MetLife Stadium": [
+	{
+	    "Team": ["New York Giants", "New York Jets"],
+	    "Capacity": 82500,
+	    "Location": "East Rutherford, New Jersey",
+	}
+    ]
+
+    "Nissan Stadium": [
+	{
+	    "Team": "Tennessee Titans",
+	    "Capacity": 69143,
+	    "Location": "Nashville, Tennessee",
+	}
+    ]
+
+    "NRG Stadium": [
+	{
+	    "Team": "Houston Texans",
+	    "Capacity": 72220,
+	    "Location": "Houston, Texas",
+	}
+    ]
+
+    "Paycor Stadium": [
+	{
+	    "Team": "Cincinnati Bengals",
+	    "Capacity": 65515,
+	    "Location": "Cincinnati, Ohio",
+	}
+    ]
+
+    "Raymond James Stadium": [
+	{
+	    "Team": "Tampa Bay Buccaneers",
+	    "Capacity": 69218,
+	    "Location": "Tampa, Florida",
+	}
+    ]
+
+    "SoFi Stadium": [
+	{
+	    "Team": ["Los Angeles Rams", "Los Angeles Chargers"],
+	    "Capacity": 70000,
+	    "Location": "Inglewood, California",
+	}
+    ]
+
+    "Soldier Field": [
+	{
+	    "Team": "Chicago Bears",
+	    "Capacity": 61500,
+	    "Location": "Chicago, Illinois",
+	}
+    ]
+
+    "State Farm Stadium": [
+	{
+	    "Team": "Arizona Cardinals",
+	    "Capacity": 63400,
+	    "Location": "Glendale, Arizona",
+	}
+    ]
+
+    "TIAA Bank Field": [
+	{
+	    "Team": "Jacksonville Jaguars",
+	    "Capacity": 67838,
+	    "Location": "Jacksonville, Florida",
+	}
+    ]
+
+    
+    "U.S. Bank Stadium": [
+	{
+	    "Team": "Minnesota Vikings",
+	    "Capacity": 66655,
+	    "Location": "Minneapolis, Minnesota",
+	}
+    ]
+}

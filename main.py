@@ -91,16 +91,17 @@ class League:
 
     def get_stadium(self, t):
         '''Store a dictionary of team and stadium, run a search for the stadium based on home team, return stadium'''
-        import ast
-        parsed_json = ast.literal_eval("stadiums.json")
         with open("stadiums.json") as json_file:
             data = json.load(json_file)
-            print(json.dumps(data, indent=4))
+            #print(json.dumps(data, indent=4))
 
-        for stadium, team in data.keys():
-            print(stadium)
-            print(team)
-
+        for stadium in data.values():
+            for items in stadium:
+                if t == items['Team']:
+                    print(f"{t} found in league.")
+                # need to continue searching for teams that share stadiums (NY, LA)
+                # teams contained in further list: "Teams": ["NY", "NY"]
+            
 class Game:
     def __init__(self, league, home_team, away_team):
         # what makes a game (time, teams, etc)
@@ -125,7 +126,7 @@ if __name__ == '__main__':
     league = League()
     p = league.print_league()
     conf, zone = league.match_division('Green Bay Packers') # search for team and find conf
-    league.get_stadium('Green Bay Packers')
+    league.get_stadium('NY Jets')
     print(conf, zone)
 
     

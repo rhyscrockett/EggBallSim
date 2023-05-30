@@ -92,13 +92,32 @@ class League:
     def get_stadium(self, t):
         '''Store a dictionary of team and stadium, run a search for the stadium based on home team, return stadium'''
         with open("stadiums.json") as json_file:
-            data = json.load(json_file)
+            stadiums = json.load(json_file)
             #print(json.dumps(data, indent=4))
 
-        for stadium in data.values():
-            for items in stadium:
-                if t == items['Team']:
-                    print(f"{t} found in league.")
+        for s, i in zip(stadiums.keys(), stadiums.values()):
+            print(s)
+            print(i)
+            for item in i:
+                print(item['Team'])
+                #print(next((item for item in i if item["Team"] == t), None))
+                #print(value)
+
+        stadium = stadiums.keys()
+        print(type(stadium))
+        team = stadium.items(['Team'])
+        print(type(team))
+        list_of_stadiums = list(map(lambda d: d['Team'], stadiums))
+        print(list_of_stadiums)
+            
+        
+        #for stadium in data.keys(): # for each stadium (key) in JSON file
+        #    print(stadium)
+        #    for item in stadium: # for each item in each dictionary
+        #        for team in item:
+        #            if t == team['Team']:
+        #                print(f"{t} found in league.")
+        #                return stadium
                 # need to continue searching for teams that share stadiums (NY, LA)
                 # teams contained in further list: "Teams": ["NY", "NY"]
             
@@ -126,8 +145,10 @@ if __name__ == '__main__':
     league = League()
     p = league.print_league()
     conf, zone = league.match_division('Green Bay Packers') # search for team and find conf
-    league.get_stadium('NY Jets')
     print(conf, zone)
+    s = league.get_stadium('Green Bay Packers')
+    print(s)
+        
 
     
     

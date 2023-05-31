@@ -95,31 +95,10 @@ class League:
             stadiums = json.load(json_file)
             #print(json.dumps(data, indent=4))
 
-        for s, i in zip(stadiums.keys(), stadiums.values()):
-            print(s)
-            print(i)
-            for item in i:
-                print(item['Team'])
-                #print(next((item for item in i if item["Team"] == t), None))
-                #print(value)
-
-        stadium = stadiums.keys()
-        print(type(stadium))
-        team = stadium.items(['Team'])
-        print(type(team))
-        list_of_stadiums = list(map(lambda d: d['Team'], stadiums))
-        print(list_of_stadiums)
+        for (k,v) in stadiums.items():
+            print("Stadium: " + k + " (" + str(v.get("Team")) + ")")
+            #print("Team: " + str(v.get("Team")))
             
-        
-        #for stadium in data.keys(): # for each stadium (key) in JSON file
-        #    print(stadium)
-        #    for item in stadium: # for each item in each dictionary
-        #        for team in item:
-        #            if t == team['Team']:
-        #                print(f"{t} found in league.")
-        #                return stadium
-                # need to continue searching for teams that share stadiums (NY, LA)
-                # teams contained in further list: "Teams": ["NY", "NY"]
             
 class Game:
     def __init__(self, league, home_team, away_team):

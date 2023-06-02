@@ -96,9 +96,15 @@ class League:
             #print(json.dumps(data, indent=4))
 
         for (k,v) in stadiums.items():
-            print("Stadium: " + k + " (" + str(v.get("Team")) + ")")
-            #print("Team: " + str(v.get("Team")))
-            
+            if isinstance(v.get("Team"), list): # find if the stadium is used by two
+                for i in v.get("Team"): # print through each team
+                    print("Stadium: " + k + " (" + str(i) + ")")
+            else:
+                print("Stadium: " + k + " (" + str(v.get("Team")) + ")")
+                #print("Team: " + str(v.get("Team")))
+                if v.get("Team") == t:
+                    print("MATCH")
+                    print(k)
             
 class Game:
     def __init__(self, league, home_team, away_team):

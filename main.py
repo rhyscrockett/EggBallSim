@@ -12,12 +12,19 @@ class Player:
         self.init_player_stats()
 
     def init_player_stats(self):
-        # init baseline stats
-        self.strength = random.randint(40, 99)
-        self.stamina = random.randint(40, 99)
-        self.speed = random.randint(40, 99)
-        self.agility = random.randint(40, 99)
-        self.accuracy = random.randint(40, 99)
+        # Sort positions into lists of skills
+        HIGH_STRENGTH = ['RB', 'TE', 'LT', 'LG', 'C', 'RG', 'RT', 'DT', 'DE', 'MLB', 'OLB']
+        HIGH_STAMINA = ['WR', 'SS', 'FS', 'CB', 'TE', 'RB']
+        HIGH_SPEED = ['RB', 'WR', 'SS', 'FS', 'CB', 'OLB']
+        HIGH_AGILITY = ['QB', 'RB', 'WR', 'SS', 'FS', 'CB']
+        HIGH_ACCURACY = ['QB', 'WR', 'C', 'TE', 'K', 'P']
+        
+        # set all player stats (APPLY LARGER RANDOM NUMBER IF THEY ARE IN HIGH LIST, OTHERWISE LOW RANGE.
+        self.strength = random.randint(60, 99) if self.position in HIGH_STRENGTH else random.randint(20, 60)
+        self.stamina = random.randint(60, 99) if self.position in HIGH_STAMINA else random.randint(20, 60)
+        self.speed = random.randint(60, 99) if self.position in HIGH_SPEED else random.randint(20, 60)
+        self.agility = random.randint(60, 99) if self.position in HIGH_AGILITY else random.randint(20, 60)
+        self.accuracy = random.randint(60, 99) if self.position in HIGH_ACCURACY else random.randint(20, 60)
             
     def __repr__(self):
         price = "${:,}".format(self.price)
@@ -134,12 +141,16 @@ if __name__ == '__main__':
     players = generate_players()
     Pool.print_pool(players)
 
+    # Generate (Create) new League for Game
     league = League()
-    #p = league.print_league()
-    conf, zone = league.match_division('Green Bay Packers') # search for team and find conf
-    #print(conf, zone)
-    s = league.get_stadium('Green Bay Packers')
-    #print(s)
+    #league.print_league() # print the league (Conf: Div[N,S,E,W]
+
+    # Match team to their conf/zone (will be used later by Game when determing who to play against)
+    conf, zone = league.match_division('Green Bay Packers') # based on team, find matching conf/zone
+    print(conf, zone)
+
+    # Returns the stadium of the team passed through.
+    league.get_stadium('Green Bay Packers')
         
 
     

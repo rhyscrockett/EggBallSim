@@ -110,12 +110,17 @@ class League:
             if isinstance(v.get("Team"), list): # find if the stadium is used by two
                 for i in v.get("Team"): # print through each team
                     print("Stadium: " + k + " (" + str(i) + ")")
+                    if i == t:
+                        print("MATCH")
+                        print(i)
+                        return k
             else:
                 print("Stadium: " + k + " (" + str(v.get("Team")) + ")")
                 #print("Team: " + str(v.get("Team")))
                 if v.get("Team") == t:
                     print("MATCH")
                     print(k)
+                    return k
             
 class Game:
     def __init__(self, league, home_team, away_team):
@@ -142,7 +147,7 @@ if __name__ == '__main__':
     p = league.print_league()
     conf, zone = league.match_division('Green Bay Packers') # search for team and find conf
     print(conf, zone)
-    s = league.get_stadium('Green Bay Packers')
+    s = league.get_stadium('NY Jets')
     print(s)
         
 

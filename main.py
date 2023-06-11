@@ -13,20 +13,31 @@ class Player:
         price = "${:,}".format(self.price)
         return f"{self.name}: ({self.position}) - {price}"
 
-    def get_position():
+    def generate_position():
         """Returns a random position from a list of possible player positions."""
         pos = ["QB", "RB", "WR", "TE", "LT", "LG", "C", "RG", "RT",
                "DT", "DE", "MLB", "OLB", "CB", "SS", "FS",
                "K", "P"]
         return random.choice(pos)
 
-    def get_name():
+    def generate_name():
         """Returns a random name from the names library."""
         return names.get_full_name(gender='male')
     
-    def get_price():
+    def generate_price():
         """Returns a random float value rounded to the closes."""
         return round(random.uniform(660000, 50000000))
+
+class PlayerStats(Player):
+    '''Class inheritence to store specific player details.'''
+    def __init__(self, speed, accuracy, strength):
+        super().__init__(self,
+        self.speed = 0
+        self.accuracy = 0
+        self.strength = 0
+        
+
+    
 
 class Pool:
     def __init__(self):
@@ -45,7 +56,7 @@ def generate_players(): # technically should be a Player func (getter)
     rhys = Player("Rhys Crockett", "QB", 123453) # manuall add
     player_pool.add(rhys)
     for i in range(100):
-        i = Player(Player.get_name(), Player.get_position(), Player.get_price())
+        i = Player(Player.generate_name(), Player.generate_position(), Player.generate_price())
         player_pool.add(i)
 
     return player_pool

@@ -4,6 +4,12 @@ import csv
 import json
 
 class Player:
+    _strength = 0
+    _stamina = 0
+    _speed = 0
+    _agility = 0
+    _accuracy = 0
+    
     def __init__(self, name, position, price):
         self.name = name
         self.position = position
@@ -28,16 +34,8 @@ class Player:
         """Returns a random float value rounded to the closes."""
         return round(random.uniform(660000, 50000000))
 
-class PlayerStats(Player):
-    '''Class inheritence to store specific player details.'''
-    def __init__(self, speed, accuracy, strength):
-        super().__init__(self,
-        self.speed = 0
-        self.accuracy = 0
-        self.strength = 0
-        
-
-    
+    def assign_attributes(self):
+        pass
 
 class Pool:
     def __init__(self):
@@ -110,17 +108,12 @@ class League:
             if isinstance(v.get("Team"), list): # find if the stadium is used by two
                 for i in v.get("Team"): # print through each team
                     print("Stadium: " + k + " (" + str(i) + ")")
-                    if i == t:
-                        print("MATCH")
-                        print(i)
-                        return k
             else:
                 print("Stadium: " + k + " (" + str(v.get("Team")) + ")")
                 #print("Team: " + str(v.get("Team")))
                 if v.get("Team") == t:
                     print("MATCH")
                     print(k)
-                    return k
             
 class Game:
     def __init__(self, league, home_team, away_team):
@@ -147,7 +140,7 @@ if __name__ == '__main__':
     p = league.print_league()
     conf, zone = league.match_division('Green Bay Packers') # search for team and find conf
     print(conf, zone)
-    s = league.get_stadium('NY Jets')
+    s = league.get_stadium('Green Bay Packers')
     print(s)
         
 

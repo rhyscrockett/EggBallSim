@@ -2,22 +2,27 @@ import random
 import names
 import csv
 import json
+import time
 
 class Player:
-    _strength = 0
-    _stamina = 0
-    _speed = 0
-    _agility = 0
-    _accuracy = 0
-    
     def __init__(self, name, position, price):
         self.name = name
         self.position = position
         self.price = price
+        self.init_player_stats()
 
+    def init_player_stats(self):
+        # init baseline stats
+        self.strength = random.randint(40, 99)
+        self.stamina = random.randint(40, 99)
+        self.speed = random.randint(40, 99)
+        self.agility = random.randint(40, 99)
+        self.accuracy = random.randint(40, 99)
+            
     def __repr__(self):
         price = "${:,}".format(self.price)
-        return f"{self.name}: ({self.position}) - {price}"
+        stats = "STR: {}\tSTA: {}\tSPD: {}\tAGL: {}\tACC: {}\n".format(self.strength, self.stamina, self.speed, self.agility, self.accuracy)
+        return f"{self.name}: ({self.position}) - {price}\n{stats}"
 
     def generate_position():
         """Returns a random position from a list of possible player positions."""
@@ -34,9 +39,6 @@ class Player:
         """Returns a random float value rounded to the closes."""
         return round(random.uniform(660000, 50000000))
 
-    def assign_attributes(self):
-        pass
-
 class Pool:
     def __init__(self):
         self.pool = []
@@ -47,17 +49,6 @@ class Pool:
     def print_pool(self):
         for i in self.pool:
             print(i)
-
-def generate_players(): # technically should be a Player func (getter)
-    """Returns a Player obj that contains a pool of random generated players."""
-    player_pool = Pool()
-    rhys = Player("Rhys Crockett", "QB", 123453) # manuall add
-    player_pool.add(rhys)
-    for i in range(100):
-        i = Player(Player.generate_name(), Player.generate_position(), Player.generate_price())
-        player_pool.add(i)
-
-    return player_pool
 
 class League:
     def __init__(self):
@@ -80,8 +71,8 @@ class League:
 
     def print_league(self):
         # the easiesy/clean way to print the NFL league:
-        print(json.dumps(self.league, indent=4))
-        print("\n")
+        #print(json.dumps(self.league, indent=4))
+        #print("\n")
         # best way to run through each nested dict/list - returns the teams within divisions
         for conf, div in self.league.items():
             print("Conference:", conf) # print conf header
@@ -130,18 +121,25 @@ class Game:
         # Set the date and time of the game
         self.date = datetime.datetime.now()
         self.time = datetime.time(12, 0)
-
-
+        
 if __name__ == '__main__':
+    def generate_players(): # technically should be a Player func (getter)
+        """Returns a Player obj that contains a pool of random generated players."""
+        player_pool = Pool()
+        for i in range(100):
+            i = Player(Player.generate_name(), Player.generate_position(), Player.generate_price())
+            player_pool.add(i)
+        return player_pool
+    
     players = generate_players()
     Pool.print_pool(players)
 
     league = League()
-    p = league.print_league()
+    #p = league.print_league()
     conf, zone = league.match_division('Green Bay Packers') # search for team and find conf
-    print(conf, zone)
+    #print(conf, zone)
     s = league.get_stadium('Green Bay Packers')
-    print(s)
+    #print(s)
         
 
     

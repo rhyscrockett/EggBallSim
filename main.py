@@ -2,7 +2,6 @@ import random
 import names
 import csv
 import json
-import time
 
 class Player:
     def __init__(self, name, position, price):

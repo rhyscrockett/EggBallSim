@@ -49,13 +49,6 @@ class Pool:
     def __init__(self):
         self.pool = []
 
-    def add(self, player):
-        self.pool.append(player)
-
-    def print_pool(self):
-        for i in self.pool:
-            print(i)
-
     def __iter__(self):
         self.i = -1
         return self
@@ -65,6 +58,21 @@ class Pool:
         if self.i < len(self.pool):
             return self.pool[self.i]
         raise StopIteration
+
+    def add(self, player):
+        self.pool.append(player)
+
+    def print_pool(self):
+        for i in self.pool:
+            print(i)
+
+    def find_player(name, pool):
+        for player in pool:
+            if player.name == name:
+                print("Found Player!", player)
+                return player
+            else:
+                continue
 
 class League:
     def __init__(self):
@@ -135,8 +143,8 @@ class Game:
         # Set the home and away teams - class for Leagues/Conferences
         self.stadium = self.league.get_stadium(self.home_team)
         # Set the date and time of the game
-        self.date = datetime.datetime.now()
-        self.time = datetime.time(12, 0)
+        #self.date = datetime.datetime.now()
+        #self.time = datetime.time(12, 0)
         
 if __name__ == '__main__':
     def generate_players(): # technically should be a Player func (getter)
@@ -151,15 +159,7 @@ if __name__ == '__main__':
     
     players = generate_players()
     Pool.print_pool(players)
-
-    ## THIS WORKS - ITERATE THROUGH PLAYERS (Pool obj), using iterator player with attribute name can find matching
-    print("PRINT TEST:::")
-    for player in players:
-        if player.name == 'Rhys Crockett':
-            print("Found player: Rhys Crockett") # needs adapatation to be a func, pass in search name
-            #return playerobject # FURTHER work, return the Player object from the queue, using the name as search param.
-        else:
-            continue
+    Pool.find_player('Rhys Crockett', players) # provide Player Name and Pool, finds Player and returns class.
 
     # Generate (Create) new League for Game
     league = League()

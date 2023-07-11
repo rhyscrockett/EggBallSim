@@ -56,6 +56,16 @@ class Pool:
         for i in self.pool:
             print(i)
 
+    def __iter__(self):
+        self.i = -1
+        return self
+    
+    def __next__(self):
+        self.i += 1
+        if self.i < len(self.pool):
+            return self.pool[self.i]
+        raise StopIteration
+
 class League:
     def __init__(self):
         self.league = {}
@@ -132,6 +142,8 @@ if __name__ == '__main__':
     def generate_players(): # technically should be a Player func (getter)
         """Returns a Player obj that contains a pool of random generated players."""
         player_pool = Pool()
+        rhys = Player('Rhys Crockett', 'QB', 2943123)
+        player_pool.add(rhys)
         for i in range(100):
             i = Player(Player.generate_name(), Player.generate_position(), Player.generate_price())
             player_pool.add(i)
@@ -139,6 +151,15 @@ if __name__ == '__main__':
     
     players = generate_players()
     Pool.print_pool(players)
+
+    ## THIS WORKS - ITERATE THROUGH PLAYERS (Pool obj), using iterator player with attribute name can find matching
+    print("PRINT TEST:::")
+    for player in players:
+        if player.name == 'Rhys Crockett':
+            print("Found player: Rhys Crockett") # needs adapatation to be a func, pass in search name
+            #return playerobject # FURTHER work, return the Player object from the queue, using the name as search param.
+        else:
+            continue
 
     # Generate (Create) new League for Game
     league = League()
@@ -150,7 +171,3 @@ if __name__ == '__main__':
 
     # Returns the stadium of the team passed through.
     league.get_stadium('Green Bay Packers')
-        
-
-    
-    

@@ -60,16 +60,26 @@ class Pool:
         raise StopIteration
 
     def add(self, player):
+        print("Adding - ", player)
         self.pool.append(player)
+
+    def delete(self, name):
+        for player in self.pool:
+            if player.name == name:
+                print("Removing - ", player)
+                self.pool.remove(player)
+            else:
+                continue
+            print("Player not found in pool.")
 
     def print_pool(self):
         for i in self.pool:
             print(i)
 
-    def find_player(name, pool):
-        for player in pool:
+    def find_player(self, name):
+        for player in self.pool:
             if player.name == name:
-                print("Found Player!", player)
+                print("Found - ", player)
                 return player
             else:
                 continue
@@ -159,7 +169,9 @@ if __name__ == '__main__':
     
     players = generate_players()
     Pool.print_pool(players)
-    Pool.find_player('Rhys Crockett', players) # provide Player Name and Pool, finds Player and returns class.
+    Pool.find_player(players, "Rhys Crockett") # provide Player Name and Pool, finds Player and returns class.
+    Pool.delete(players, "Rhys Crockett")
+    Pool.print_pool(players)# after delete
 
     # Generate (Create) new League for Game
     league = League()

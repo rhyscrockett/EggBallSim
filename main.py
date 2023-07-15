@@ -70,7 +70,7 @@ class Pool:
                 self.pool.remove(player)
             else:
                 continue
-            print("Player not found in pool.")
+        print("Player not found in pool.")
 
     def print_pool(self):
         for i in self.pool:
@@ -83,6 +83,7 @@ class Pool:
                 return player
             else:
                 continue
+        print("Player not found in pool.")
 
 class League:
     def __init__(self):
@@ -160,8 +161,6 @@ if __name__ == '__main__':
     def generate_players(): # technically should be a Player func (getter)
         """Returns a Player obj that contains a pool of random generated players."""
         player_pool = Pool()
-        rhys = Player('Rhys Crockett', 'QB', 2943123)
-        player_pool.add(rhys)
         for i in range(100):
             i = Player(Player.generate_name(), Player.generate_position(), Player.generate_price())
             player_pool.add(i)
@@ -169,9 +168,8 @@ if __name__ == '__main__':
     
     players = generate_players()
     Pool.print_pool(players)
-    Pool.find_player(players, "Rhys Crockett") # provide Player Name and Pool, finds Player and returns class.
-    Pool.delete(players, "Rhys Crockett")
-    Pool.print_pool(players)# after delete
+    Pool.find_player(players, "Rhys Crockett") # provide Pool and Player name, finds Player and returns class.
+    Pool.delete(players, "Rhys Crockett") # provide Pool and Player name, finds Player and returns class.
 
     # Generate (Create) new League for Game
     league = League()

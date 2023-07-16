@@ -143,19 +143,18 @@ class League:
             
 class Game:
     def __init__(self, league, home_team, away_team):
-        # what makes a game (time, teams, etc)
-        self.home_team = home_team
-        self.away_team = away_team
-        self.league = league
-        self.home_score = 0
-        self.away_score = 0
+        # what makes a game (teams, score, play time etc)
+        self.home_team = home_team # pass in home team
+        self.away_team = away_team # pass in away team
+        self.league = league # create league obj - has the get init league, get_stadium functions 
+        self.home_score = 0 # variable to track home team score
+        self.away_score = 0 # variable to track away team score
+        self.time = 60 # variable to track 60 minute games (have to work out how I fast I want to run the game)
+        self.quaters = 4 # 4 quaters to a game
 
     def setup_game(self):
         # Set the home and away teams - class for Leagues/Conferences
         self.stadium = self.league.get_stadium(self.home_team)
-        # Set the date and time of the game
-        #self.date = datetime.datetime.now()
-        #self.time = datetime.time(12, 0)
         
 if __name__ == '__main__':
     def generate_players(): # technically should be a Player func (getter)

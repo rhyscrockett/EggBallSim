@@ -91,6 +91,7 @@ class League:
         self.nfc = {}
         self.afc = {}
         self.setup_league()
+        self.schedule = []
 
     def setup_league(self):
         with open("teams.csv", "r") as file:
@@ -103,6 +104,153 @@ class League:
                     self.afc.setdefault(row[3], []).append(row[0])
         self.league.update({"NFC": self.nfc,
                             "AFC": self.afc})
+        
+    def generate_schedule(self): # (NOT INCLUDING BYE, OR PARITY GAMES) 224/272
+        conference_matchups = [] # conference games (NFC, AFC)
+        division_matchups = [] # division games (NFC West, NFC North)
+        interconference_matchups = [] # division games from other conf (NFC East, AFC South)
+        parity_matchups = [] # games against similar ranked teams in each of the two itraconference div
+
+        # 1. Six games against divisonal opponents (returns 96 games)
+        for division in self.nfc.values():
+            division_matchups.extend(self._generate_divisional_matchups(division))
+        for division in self.afc.values():
+            division_matchups.extend(self._generate_divisional_matchups(division))
+
+        # 2. Four games against teams from a division within its conference (returns 64 games)
+        conference_matchups.extend(self._generate_conference_matchups())
+
+        # 3. Four games against teams from a division in the other conference (returns 64 games)
+        interconference_matchups.extend(self._generate_interconference_matchups())
+
+        # 4. Two games against teams from the same divisional rank in each of the two intraconference divisions (should return 32 games - WIP)
+        for division in self.nfc.values(): 
+            parity_matchups.extend(self._generate_parity_matchups(division))
+        for division in self.afc.values():
+            parity_matchups.extend(self._generate_parity_matchups(division))
+        
+        # 5. The 17th game is an additional game against a non-conference opponent from a division that the team is not scheduled to play. Matchups are based on division ranking from the previous season. (should return 16 games - WIP)
+
+
+        schedule = conference_matchups + division_matchups + interconference_matchups #+ parity_matchups
+
+        # shuffle schedule
+        random.shuffle(schedule)
+
+        # assign by weeks randomly to each team
+        #bye_weeks = self._assign_bye_weeks(self.league.keys(), start_week=4, end_week=12)
+
+        # Create the final schedule with bye weeks
+        #final_schedule = []
+        #for week in range(1, 19): # 18 weeks
+        #    if week not in bye_weeks:
+        #        final_schedule.extend(self._filter_schedule(schedule, week))
+        #    else:
+        #        teams_on_bye = bye_weeks[week]
+        #        for team in teams_on_bye:
+        #            final_schedule.append((team, "BYE"))
+
+        #self.schedule = final_schedule
+
+        return schedule
+    
+    def _filter_schedule(self, schedule, week):
+        return [(home_team, away_team) for home_team, away_team in schedule if home_team != "BYE" and away_team != "BYE"]
+    
+    def _assign_bye_weeks(self, teams, start_week, end_week):
+        # DO NOT UNDERSTAND THE FORMAT FOR BYE WEEKS IN NFL - THEREFORE, WILL USE THE FORMAT 4 TEAMS ON BYE FOR 8 WEEKS (STARS WEEK 4, ENDS WEEK 12)
+        bye_weeks = {}
+        bye_week_slots = list(range(start_week, end_week + 1))
+        for team in teams:
+            bye_week = random.choice(bye_week_slots)
+            bye_week_slots.remove(bye_week)
+            bye_weeks.setdefault(bye_week, []).append(team)            
+
+    def _generate_conference_matchups(self):
+        matchups = []
+        for conference_division in [self.nfc, self.afc]:
+            divisions = list(conference_division.values())
+            random.shuffle(divisions)
+
+            for division1, division2 in zip(divisions[0::2], divisions[1::2]):
+                division1_teams = [team for team in division1]
+                division2_teams = [team for team in division2]
+
+                for division1_team in division1_teams:
+                    opponents = list(division2_teams) # make a copy of teams to work with
+
+                    # randomly select 2 home and 2 away opponents from the AFC division
+                    home_games = random.sample(opponents, 2)
+                    opponents = [team for team in opponents if team not in home_games] # remove the selected home opponents
+                    away_games = random.sample(opponents, 2)
+
+                    for division2_team in home_games:
+                        matchups.append((division1_team, division2_team))
+                    for division2_team in away_games:
+                        matchups.append((division2_team, division1_team))
+                
+        return matchups
+    
+    def _generate_divisional_matchups(self, division_teams):
+        matchups = []
+        for i in range(len(division_teams)):
+            home_team = division_teams[i]
+            for j in range(i + 1, len(division_teams)):
+                away_team = division_teams[j]
+                matchups.append((home_team, away_team)) # add both home_team, away_team
+                matchups.append((away_team, home_team)) # away_team, home_team to ensure all teams play home and away
+        random.shuffle(matchups) 
+        return matchups
+
+    def _generate_interconference_matchups(self):
+        matchups = []
+        nfc_divisions = list(self.nfc.values())
+        afc_divisions = list(self.afc.values())
+
+        random.shuffle(afc_divisions) # shuffle the AFC Divisions to ensure uniqueness
+
+        for nfc_divisions, afc_divisions in zip(nfc_divisions, afc_divisions):
+            afc_teams = [team for team in afc_divisions] # get all AFC teams in the division
+            for nfc_team in nfc_divisions:
+                afc_opponents = list(afc_teams) # make a copy of AFC teams to work with
+
+                # randomly select 2 home and 2 away opponents from the AFC division
+                home_opponents = random.sample(afc_opponents, 2)
+                afc_opponents = [team for team in afc_opponents if team not in home_opponents] # remove the selected home opponents
+                away_opponents = random.sample(afc_opponents, 2)
+
+                for afc_team in home_opponents:
+                    matchups.append((nfc_team, afc_team))
+                for afc_team in away_opponents:
+                    matchups.append((afc_team, nfc_team))
+        return matchups
+
+
+    def _generate_parity_matchups(self, division_teams):
+        matchups = []
+        for i in range(len(division_teams)):
+            home_team = division_teams[i]
+            for j in range(i + 1, len(division_teams)):
+                away_team = division_teams[j]
+                matchups.append((home_team, away_team))
+                matchups.append((away_team, home_team))
+        return matchups
+    
+    def print_schedule(self, schedule):
+        # Printing the schedule in a clean formatted table
+        print("Week\tAway Team\t@\tHome Team")
+        for week, (away_team, home_team) in enumerate(schedule, start=1):
+            print(f"{week}\t{away_team} \t@\t{home_team} ")
+
+    def print_team_schedule(self, team_name, schedule):
+        print(f"Schedule for {team_name}:")
+        team_schedule = [(week, away_team, home_team) for week, (away_team, home_team) in enumerate(schedule, start=1) if team_name in (away_team, home_team)]
+        print("Week\tAway Team\t@\tHome Team")
+        for week, away_team, home_team in team_schedule:
+            if away_team == team_name:
+                print(f"{week}\t{away_team} (Away)\t@\t{home_team} (Home)")
+            else:
+                print(f"{week}\t{home_team} (Home)\t@\t{away_team} (Away)")
 
     def print_league(self):
         # the easiesy/clean way to print the NFL league:
@@ -133,28 +281,55 @@ class League:
         for (k,v) in stadiums.items():
             if isinstance(v.get("Team"), list): # find if the stadium is used by two
                 for i in v.get("Team"): # print through each team
-                    print("Stadium: " + k + " (" + str(i) + ")")
+                    #print("Stadium: " + k + " (" + str(i) + ")")
+                    return ("Stadium: " + k + " (" + str(i) + ")")
             else:
-                print("Stadium: " + k + " (" + str(v.get("Team")) + ")")
+                #print("Stadium: " + k + " (" + str(v.get("Team")) + ")")
                 #print("Team: " + str(v.get("Team")))
                 if v.get("Team") == t:
-                    print("MATCH")
-                    print(k)
-            
+                    return(k)
+                 
 class Game:
-    def __init__(self, league, home_team, away_team):
+    def __init__(self, home_team, away_team):
         # what makes a game (teams, score, play time etc)
         self.home_team = home_team # pass in home team
         self.away_team = away_team # pass in away team
-        self.league = league # create league obj - has the get init league, get_stadium functions 
+        self.league = League() # create league obj - has the get init league, get_stadium functions
         self.home_score = 0 # variable to track home team score
         self.away_score = 0 # variable to track away team score
         self.time = 60 # variable to track 60 minute games (have to work out how I fast I want to run the game)
         self.quaters = 4 # 4 quaters to a game
 
-    def setup_game(self):
-        # Set the home and away teams - class for Leagues/Conferences
-        self.stadium = self.league.get_stadium(self.home_team)
+    def __repr__(self):
+        return f"{self.away_team} @ {self.home_team} in {self.league.get_stadium(self.home_team)}"
+    
+    def match_day(self):
+        '''Start the chosen Game. Clocks, sides, etc'''
+        #if self.home_team == YOUR_TEAM : need a variable to hold the players team. Not sure how to implement yet.
+        pass
+
+    def play_quater(self):
+        while self.time <= 15:
+            # logic for game (has kick off been) - then into play selection
+            # can be formation based, play based, like madden.
+            # might create another function for actual game logic, keeping this as a timer func
+            import datetime
+            self.time -= datetime.timedelta(seconds=50)
+            print(self.time)
+        
+
+    def coin_toss(self, player_team):
+        if self.home_team == player_team:   
+            cointoss = input("Heads or Tails? ").lower()
+            flip_coin = random.randint(0, 1)
+            if cointoss == flip_coin:
+                play = input("Kick, Receive, or Defer? ").lower()
+                if play == "kick":
+                    direction = input("Pick a direction to kick L or R: ").lower()
+                elif play == "receive":
+                    direction = input("Pick a side to receive from L or R: ").lower()
+                elif play == "defer":
+                    pass
         
 if __name__ == '__main__':
     def generate_players(): # technically should be a Player func (getter)
@@ -170,13 +345,12 @@ if __name__ == '__main__':
     Pool.find_player(players, "Rhys Crockett") # provide Pool and Player name, finds Player and returns class.
     Pool.delete(players, "Rhys Crockett") # provide Pool and Player name, finds Player and returns class.
 
-    # Generate (Create) new League for Game
-    league = League()
-    #league.print_league() # print the league (Conf: Div[N,S,E,W]
 
-    # Match team to their conf/zone (will be used later by Game when determing who to play against)
-    conf, zone = league.match_division('Green Bay Packers') # based on team, find matching conf/zone
-    print(conf, zone)
+    l = League()
+    schedule = l.generate_schedule()
+    l.print_schedule(schedule)
+    l.print_team_schedule("Green Bay Packers", schedule)
 
-    # Returns the stadium of the team passed through.
-    league.get_stadium('Green Bay Packers')
+    #new_game = Game('Green Bay Packers', 'NY Jets')
+    #print(new_game)
+    

@@ -124,11 +124,10 @@ class League:
         interconference_matchups.extend(self._generate_interconference_matchups())
 
         # 4. Two games against teams from the same divisional rank in each of the two intraconference divisions (should return 32 games - WIP)
-        for division in self.nfc.values(): 
-            parity_matchups.extend(self._generate_parity_matchups(division))
-        for division in self.afc.values():
-            parity_matchups.extend(self._generate_parity_matchups(division))
-        
+        remaining_division_matchups = self._get_remaining_divisions(conference_matchups, self.nfc)
+        parity_matchups.extend(self._generate_parity_matchups(remaining_division_matchups))
+
+
         # 5. The 17th game is an additional game against a non-conference opponent from a division that the team is not scheduled to play. Matchups are based on division ranking from the previous season. (should return 16 games - WIP)
 
 
@@ -164,7 +163,38 @@ class League:
         for team in teams:
             bye_week = random.choice(bye_week_slots)
             bye_week_slots.remove(bye_week)
-            bye_weeks.setdefault(bye_week, []).append(team)            
+            bye_weeks.setdefault(bye_week, []).append(team)
+
+    def _get_remaining_divisions(self, division_matchups, conference_teams):
+        paired_divisions = set()
+
+        for home_team, away_team in division_matchups:
+            home_team_division = None
+            away_team_division = None
+
+            for division, teams in conference_teams.items():
+                if home_team in teams:
+                    home_team_division = division
+                if away_team in teams:
+                    away_team_division = division
+
+            if home_team_division and away_team_division:
+                paired_divisions.add(tuple(sorted((home_team_division, away_team_division)))) # remove tuple and sorted to get both ways (i.e. home, away/away, home)
+
+        remaining_divisions = list(conference_teams.keys())
+        parity_division_pairs = []
+
+        for division1 in remaining_divisions:
+            for division2 in paired_divisions:
+                if division1 != division2[0] and division1 != division2[1]:
+                    parity_division_pairs.append((division1, division2[0]))
+                    parity_division_pairs.append((division1, division2[1]))
+
+        print("Paired Divisions:")
+        for division_pair in paired_divisions:
+            print(f"{division_pair}\n")
+
+        return parity_division_pairs
 
     def _generate_conference_matchups(self):
         matchups = []
@@ -226,14 +256,26 @@ class League:
         return matchups
 
 
-    def _generate_parity_matchups(self, division_teams):
+    def _generate_parity_matchups(self, parity_division_pairs):
         matchups = []
-        for i in range(len(division_teams)):
-            home_team = division_teams[i]
-            for j in range(i + 1, len(division_teams)):
-                away_team = division_teams[j]
-                matchups.append((home_team, away_team))
-                matchups.append((away_team, home_team))
+        
+        #print(parity_division_pairs)
+        for division_pair in parity_division_pairs:
+            print(division_pair)
+            division1, division2 = division_pair
+
+            division1_teams = self.nfc[division1]
+            division2_teams = self.nfc[division2]
+
+            for rank in range(len(division1_teams)):
+                team1 = division1_teams[rank]
+                team2 = division2_teams[rank]
+
+                matchups.append((team1, team2))
+                matchups.append((team2, team1))
+            
+        print(len(matchups))
+
         return matchups
     
     def print_schedule(self, schedule):

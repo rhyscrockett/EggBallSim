@@ -105,7 +105,7 @@ class League:
         self.league.update({"NFC": self.nfc,
                             "AFC": self.afc})
         
-    def generate_schedule(self): # (NOT INCLUDING BYE, OR PARITY GAMES) 224/272
+    def generate_schedule(self): # (NOT INCLUDING BYE) 256/272
         conference_matchups = [] # conference games (NFC, AFC)
         division_matchups = [] # division games (NFC West, NFC North)
         interconference_matchups = [] # division games from other conf (NFC East, AFC South)

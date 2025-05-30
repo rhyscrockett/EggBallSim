@@ -66,14 +66,14 @@ class League:
 
     def _generate_conference_matchups(self):
         matchups = []
-        for conf in [self.nfc. self.afc]:
+        for conf in [self.nfc, self.afc]:
             divisions = list(conf.values())
             random.shuffle(divisions)
             for div1, div2 in zip(divisions[0::2], divisions[1::2]):
                 matchups.extend(self._generate_home_away_matchups(div1, div2))
         return matchups
 
-    def generate_home_away_matchups(self, teams1, teams2):
+    def _generate_home_away_matchups(self, teams1, teams2):
         """Helper for generating 2 home and 2 away games for each team."""
         matchups = []
         for team in teams1:
@@ -119,7 +119,7 @@ class League:
                     matchups.append((teams2[rank], teams1[rank]))
         return matchups
     
-    def _identify_ramining_divisions(self, division_matchups, conference_teams):
+    def _identify_remaining_divisions(self, division_matchups, conference_teams):
         paired_divisions = set()
         for home, away in division_matchups:
             home_div = away_div = None
@@ -146,19 +146,23 @@ class League:
             print(f"{week:<5} {away_team:<25} @ {home_team:<25}")
 
     def print_team_schedule(self, team_name, schedule):
-        """Prints the schedule for a specific team."""
+        """Prints the schedule for a specific team with correct week numbers."""
         print(f"Schedule for {team_name}:")
         print(f"{'Week':<5} {'Opponent':<25} {'Location':<10}")
-        for week, (away_team, home_team) in enumerate(schedule, start=1):
-            if team_name == home_team:
-                opponent = away_team
+        week_num = 1
+        for away_team, home_team in schedule:
+            away_name = away_team.name if hasattr(away_team, 'name') else away_team
+            home_name = home_team.name if hasattr(home_team, 'name') else home_team
+            if team_name == home_name:
+                opponent = away_name
                 location = "Home"
-            elif team_name == away_team:
-                opponent = home_team
+            elif team_name == away_name:
+                opponent = home_name
                 location = "Away"
             else:
                 continue
-            print(f"{week:<5} {opponent:<25} {location:<10}")
+            print(f"{week_num:<5} {opponent:<25} {location:<10}")
+            week_num += 1
 
     def print_league(self):
         """Prints all conferences and divisions in the league."""

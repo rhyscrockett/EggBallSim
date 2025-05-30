@@ -2,10 +2,17 @@ import random
 import names
 
 class Player:
-    def __init__(self, name, position, price):
+    '''
+    Represents a football player with position-based attributed and skills.
+    '''
+    def __init__(self, name, position, price, age=None, experience=None):
         self.name = name
         self.position = position
         self.price = price
+        self.age = age if age is not None else random.randint(21, 38)
+        self.experience = experience if experience is not None else random.randint(0, self.age - 20)
+        self.injury_status = "Healthy"
+        self.morale = random.randint(50, 100)
         self.init_player_stats()
 
     def init_player_stats(self):
@@ -25,7 +32,11 @@ class Player:
             
     def __repr__(self):
         price = "${:,}".format(self.price)
-        stats = "STR: {}\tSTA: {}\tSPD: {}\tAGL: {}\tACC: {}\n".format(self.strength, self.stamina, self.speed, self.agility, self.accuracy)
+        stats = (
+            f"STR: {self.strength}\tSTA: {self.stamina}\tSPD: {self.speed}\t"
+            f"AGL: {self.agility}\tACC: {self.accuracy}\n"
+            f"Age: {self.age}\tExperience: {self.experience}\Morale: {self.morale}\tInjury Status: {self.injury_status}"
+        )
         return f"{self.name}: ({self.position}) - {price}\n{stats}"
 
     @staticmethod
@@ -44,4 +55,6 @@ class Player:
     @staticmethod
     def generate_price():
         """Returns a random float value rounded to the closes."""
-        return round(random.uniform(660000, 50000000))
+        base = 660_000
+        top = 50_000_000
+        return round(random.uniform(base, top))

@@ -35,7 +35,7 @@ class Player:
         stats = (
             f"STR: {self.strength}\tSTA: {self.stamina}\tSPD: {self.speed}\t"
             f"AGL: {self.agility}\tACC: {self.accuracy}\n"
-            f"Age: {self.age}\tExperience: {self.experience}\Morale: {self.morale}\tInjury Status: {self.injury_status}"
+            f"Age: {self.age}\tExperience: {self.experience}\tMorale: {self.morale}\tInjury Status: {self.injury_status}"
         )
         return f"{self.name}: ({self.position}) - {price}\n{stats}"
 
